@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EKSİK YAKIT HESAPLAMA | Fethiye Lovers</title>
+  <link rel="icon" href="https://i.ibb.co/Fbp1Ccnd/bafff.png" type="image/png" />
+  <meta name="description" content="Eksik yakıt hesaplama aracı. Fethiye Lovers tarafından hazırlanmıştır. Müşteriden tahsil edilecek yakıt ücretini hızlıca öğrenin." />
+  <meta name="keywords" content="yakıt hesaplama, benzin eksik hesaplama, fethiye araç kiralama, yakıt tahsilat, eksik depo hesapla" />
+  <meta name="author" content="Birkan Arslan Filiz" />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Rubik', sans-serif;
+      margin: 0;
+      background: #000;
+      color: #f1f1f1;
+      overflow: hidden;
+    }
+    .splash-screen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      flex-direction: column;
+    }
+    .splash-line {
+      width: 0;
+      height: 4px;
+      background: #00ffff;
+      transition: width 1s ease-in-out;
+    }
+    .splash-box {
+      margin-top: 20px;
+      padding: 20px 40px;
+      background: #111;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #00ffff;
+      cursor: pointer;
+      text-align: center;
+      font-size: 18px;
+      color: #00ffff;
+      animation: pulse 2s infinite;
+      position: relative;
+      z-index: 2;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 10px #00ffff; }
+      50% { box-shadow: 0 0 20px #00ffff; }
+    }
+    .explode {
+      animation: explode 0.5s forwards;
+    }
+    @keyframes explode {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(3); opacity: 0; }
+    }
+    .content {
+      display: none;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .container {
+      max-width: 520px;
+      background: #202020;
+      padding: 30px;
+      border-radius: 18px;
+      box-shadow: 0 8px 25px rgba(0, 255, 255, 0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #ff5757;
+      font-weight: 700;
+      font-size: 24px;
+      letter-spacing: 1px;
+    }
+    label {
+      font-weight: 600;
+      display: block;
+      margin-top: 20px;
+    }
+    select,
+    button,
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+      font-family: 'Rubik', sans-serif;
+    }
+    input {
+      background-color: #2a2a2a;
+      color: #fff;
+    }
+    button {
+      background: #00b4d8;
+      color: white;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 20px;
+    }
+    button:hover {
+      background: #0077b6;
+    }
+    .result {
+      margin-top: 25px;
+      background: #330000;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .tahsil {
+      color: #ff4d4d;
+      font-size: 18px;
+    }
+    .fuel-bar-wrapper {
+      display: flex;
+      align-items: center;
+      margin-top: 15px;
+    }
+    .fuel-label {
+      width: 20px;
+      text-align: center;
+      font-weight: bold;
+      color: #ccc;
+    }
+    .fuel-bar {
+      flex-grow: 1;
+      display: flex;
+      justify-content: space-between;
+      margin: 0 10px;
+    }
+    .bar {
+      flex: 1;
+      margin: 0 2px;
+      height: 26px;
+      border-radius: 6px;
+      background: #444;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .bar.active {
+      background: linear-gradient(to right, #00ffff, #00b4d8);
+      box-shadow: 0 0 6px #00ffffaa;
+    }
+    footer {
+      margin-top: 30px;
+      text-align: center;
+      color: #888;
+      font-size: 13px;
+    }
+    footer img {
+      max-width: 240px;
+      width: 100%;
+      margin-top: 10px;
+      opacity: 1;
+      filter: drop-shadow(0 0 6px rgba(255,255,255,0.2));
+    }
+  </style>
+</head>
+<body>
+  <div class="splash-screen" onclick="startApp()">
+    <div class="splash-line" id="splashLine"></div>
+    <div class="splash-box" id="splashBox">Giriş için tıklayın</div>
+  </div>
+
+  <div class="content" id="mainContent">
+    <div class="container">
+      <h2>EKSİK YAKIT HESAPLAMA</h2>
+      <label for="price">Güncel Litre Fiyatı (₺):</label>
+      <input type="number" id="price" placeholder="Örn: 48.42" step="0.01" />
+
+      <label>Yakıt Göstergesi:</label>
+      <div class="fuel-bar-wrapper">
+        <div class="fuel-label">E</div>
+        <div class="fuel-bar" id="fuelBar">
+          <div class="bar" data-index="0" data-value="0.125"></div>
+          <div class="bar" data-index="1" data-value="0.25"></div>
+          <div class="bar" data-index="2" data-value="0.375"></div>
+          <div class="bar" data-index="3" data-value="0.5"></div>
+          <div class="bar" data-index="4" data-value="0.625"></div>
+          <div class="bar" data-index="5" data-value="0.75"></div>
+          <div class="bar" data-index="6" data-value="0.875"></div>
+          <div class="bar" data-index="7" data-value="1"></div>
+        </div>
+        <div class="fuel-label">F</div>
+      </div>
+
+      <button id="hesaplaBtn">Hesapla</button>
+      <div class="result" id="sonuc"></div>
+    </div>
+
+    <footer>
+      <br />
+      <img src="https://i.ibb.co/Fbp1Ccnd/bafff.png" alt="Birkan Arslan Filiz Logo" />
+    </footer>
+  </div>
+
+  <script>
+    function startApp() {
+      const splashBox = document.getElementById('splashBox');
+      splashBox.classList.add('explode');
+      setTimeout(() => {
+        document.querySelector('.splash-screen').style.display = 'none';
+        const mainContent = document.getElementById('mainContent');
+        mainContent.style.display = 'flex';
+        mainContent.style.animation = 'fadeIn 1s ease-in-out';
+        document.body.style.overflow = 'auto';
+      }, 500);
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      let selectedLevel = 1;
+      let selectedIndex = 7;
+      const bars = document.querySelectorAll(".bar");
+
+      bars.forEach((bar) => {
+        bar.addEventListener("click", () => {
+          selectedLevel = parseFloat(bar.getAttribute("data-value"));
+          selectedIndex = parseInt(bar.getAttribute("data-index"));
+          updateBars();
+        });
+      });
+
+      function updateBars() {
+        bars.forEach((bar) => {
+          const index = parseInt(bar.getAttribute("data-index"));
+          bar.classList.toggle("active", index <= selectedIndex);
+        });
+      }
+
+      function hesapla() {
+        const fiyatInput = document.getElementById("price").value;
+        const fiyat = fiyatInput ? parseFloat(fiyatInput) : 48.42;
+        const depo = 44;
+        const mevcut = depo * selectedLevel;
+        const eksik = depo - mevcut;
+        const tutar = eksik * fiyat;
+        const toplamTutar = tutar + 350;
+
+        document.getElementById("sonuc").innerHTML = `
+          Eksik Yakıt: ${eksik.toFixed(2)} litre<br />
+          <span class="tahsil">Tahsil Edilecek: ${toplamTutar.toFixed(2)} ₺</span>
+        `;
+      }
+
+      document.getElementById("hesaplaBtn").addEventListener("click", hesapla);
+      updateBars();
+    });
+  </script>
+</body>
+</html>
