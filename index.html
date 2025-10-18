@@ -9,37 +9,48 @@
   <meta name="author" content="Birkan Arslan Filiz" />
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    body {font-family:'Rubik',sans-serif;margin:0;background:#000;color:#f1f1f1;overflow:hidden;}
-    .splash-screen{position:fixed;top:0;left:0;width:100vw;height:100vh;background:#000;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;}
-    .splash-box{margin-top:20px;padding:20px 40px;background:#111;border-radius:12px;box-shadow:0 0 10px #00ffff;cursor:pointer;text-align:center;font-size:18px;color:#00ffff;animation:pulse 2s infinite;}
-    @keyframes pulse{0%,100%{box-shadow:0 0 10px #00ffff;}50%{box-shadow:0 0 20px #00ffff;}}
-    .content{display:none;padding:20px;display:flex;justify-content:center;flex-direction:column;align-items:center;}
-    .container{max-width:600px;background:#202020;padding:30px;border-radius:18px;box-shadow:0 8px 25px rgba(0,255,255,0.1);}
-    h2{text-align:center;color:#ff5757;font-weight:700;font-size:24px;}
-    label{font-weight:600;display:block;margin-top:20px;}
-    select,button,input{width:100%;padding:12px;margin-top:10px;border-radius:10px;border:none;font-size:16px;font-family:'Rubik',sans-serif;}
-    input,select{background:#1f1f1f;color:#fff;border:1px solid #2a2a2a;}
-    button{background:#00b4d8;color:white;font-weight:bold;text-transform:uppercase;letter-spacing:1px;margin-top:20px;}
+    :root{
+      --bg:#000;--card:#202020;--muted:#151515;--text:#f1f1f1;--accent:#00b4d8;--accent2:#00ffff;
+      --danger:#ff4d4d;--muted-2:#2a2a2a;
+    }
+    html,body{height:100%;}
+    body {font-family:'Rubik',sans-serif;margin:0;background:var(--bg);color:var(--text);overflow-y:auto;}
+    .splash-screen{position:fixed;inset:0;background:#000;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;}
+    .splash-box{margin-top:20px;padding:20px 40px;background:#111;border-radius:12px;box-shadow:0 0 10px var(--accent2);cursor:pointer;text-align:center;font-size:18px;color:var(--accent2);animation:pulse 2s infinite;}
+    @keyframes pulse{0%,100%{box-shadow:0 0 10px var(--accent2);}50%{box-shadow:0 0 20px var(--accent2);}}
+    .content{display:none;min-height:100vh;padding:20px 16px 80px;box-sizing:border-box;}
+    .container{width:100%;max-width:780px;margin:0 auto;background:var(--card);padding:24px;border-radius:18px;box-shadow:0 8px 25px rgba(0,255,255,0.1);}
+    h2{text-align:center;color:#ff5757;font-weight:700;font-size:22px;margin:0 0 8px;}
+    .sub{margin:6px auto 16px;text-align:center;color:#9ad9ff;font-size:12px}
+    label{font-weight:600;display:block;margin-top:16px;}
+    select,button,input{width:100%;padding:12px;margin-top:8px;border-radius:10px;border:none;font-size:16px;font-family:'Rubik',sans-serif;}
+    input,select{background:#1f1f1f;color:#fff;border:1px solid var(--muted-2);}
+    button{background:var(--accent);color:white;font-weight:bold;text-transform:uppercase;letter-spacing:1px;margin-top:12px;}
     button:hover{background:#0077b6;}
-    .row{display:flex;gap:10px;flex-wrap:wrap;}
-    .row > *{flex:1 1 220px;}
-    .result{margin-top:25px;background:#330000;padding:20px;border-radius:10px;text-align:center;font-weight:bold;}
-    .tahsil{color:#ff4d4d;font-size:18px;}
-    .fuel-bar-wrapper{display:flex;align-items:center;margin-top:15px;}
+    .result{margin-top:18px;background:#330000;padding:16px;border-radius:10px;text-align:center;font-weight:bold;}
+    .tahsil{color:var(--danger);font-size:18px;}
+    .fuel-bar-wrapper{display:flex;align-items:center;margin-top:12px;}
     .fuel-label{width:20px;text-align:center;font-weight:bold;color:#ccc;}
     .fuel-bar{flex-grow:1;display:flex;justify-content:space-between;margin:0 10px;}
     .bar{flex:1;margin:0 2px;height:26px;border-radius:6px;background:#444;cursor:pointer;transition:background 0.3s;}
-    .bar.active{background:linear-gradient(to right,#00ffff,#00b4d8);box-shadow:0 0 6px #00ffffaa;}
-    .vehicle-card{margin-bottom:18px;background:#151515;border-radius:14px;padding:16px;box-shadow:0 4px 14px rgba(0,255,255,0.06);border:1px solid #222;}
+    .bar.active{background:linear-gradient(to right,var(--accent2),var(--accent));box-shadow:0 0 6px #00ffffaa;}
+    .vehicle-card{margin-bottom:12px;background:var(--muted);border-radius:14px;padding:16px;box-shadow:0 4px 14px rgba(0,255,255,0.06);border:1px solid #222;}
     .vehicle-header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
-    .vehicle-header h3{margin:0;font-size:18px;color:#00ffff;}
+    .vehicle-header h3{margin:0;font-size:18px;color:var(--accent2);}
     .vehicle-search{flex:1;min-width:220px;}
     .vehicle-select{width:100%;margin-top:10px;height:44px;}
-    .vehicle-selected{margin-top:10px;font-size:14px;color:#bbb;}
-    .almost-empty{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:14px;color:#ddd;background:#151515;padding:10px 12px;border-radius:10px;border:1px solid #222;}
+    .vehicle-selected{margin-top:8px;font-size:14px;color:#bbb;}
+    .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px;}
+    .row > *{flex:1 1 220px;}
+    .almost-empty{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:14px;color:#ddd;background:var(--muted);padding:10px 12px;border-radius:10px;border:1px solid #222;}
     .hint{margin-top:8px;font-size:12px;color:#9ad9ff;}
-    footer{margin-top:30px;text-align:center;color:#888;font-size:13px;}
-    footer img{max-width:240px;width:100%;margin-top:10px;filter:drop-shadow(0 0 6px rgba(255,255,255,0.2));}
+    .timestamp{margin-top:6px;font-size:12px;color:#9ad9ff;text-align:left;}
+    footer{max-width:780px;margin:18px auto 0;text-align:center;color:#888;font-size:13px;}
+    footer img{max-width:240px;width:100%;margin:10px auto 0;filter:drop-shadow(0 0 6px rgba(255,255,255,0.2));display:block;}
+    @media (max-width:420px){
+      h2{font-size:20px}
+      .container{padding:18px}
+    }
   </style>
 </head>
 <body>
@@ -77,23 +88,43 @@
           </select>
         </div>
         <div>
-          <label for="price">Güncel Litre Fiyatı (₺):</label>
-          <input type="number" id="price" placeholder="Örn: 48.42" step="0.01" />
+          <label for="fuelType">Yakıt Türü:</label>
+          <select id="fuelType">
+            <option value="benzin">Benzin (95)</option>
+            <option value="motorin">Motorin (Dizel)</option>
+            <option value="lpg">LPG</option>
+          </select>
         </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="city">Şehir:</label>
+          <select id="city"></select>
+        </div>
+        <div>
+          <label for="price">Güncel Litre Fiyatı (₺):</label>
+          <input type="number" id="price" placeholder="Örn: 58.00" step="0.01" />
+        </div>
+      </div>
+
+      <div>
+        <button id="fetchBtn">Güncel Fiyatı Çek</button>
+        <div id="lastUpdate" class="timestamp"></div>
       </div>
 
       <label>Yakıt Göstergesi:</label>
       <div class="fuel-bar-wrapper">
         <div class="fuel-label">E</div>
         <div class="fuel-bar" id="fuelBar">
-          <div class="bar" data-index="0" data-value="0.125"></div>
-          <div class="bar" data-index="1" data-value="0.25"></div>
-          <div class="bar" data-index="2" data-value="0.375"></div>
-          <div class="bar" data-index="3" data-value="0.5"></div>
-          <div class="bar" data-index="4" data-value="0.625"></div>
-          <div class="bar" data-index="5" data-value="0.75"></div>
-          <div class="bar" data-index="6" data-value="0.875"></div>
-          <div class="bar" data-index="7" data-value="1"></div>
+          <div class="bar" data-index="0" data-value="0.125" title="1/8"></div>
+          <div class="bar" data-index="1" data-value="0.25"  title="1/4"></div>
+          <div class="bar" data-index="2" data-value="0.375" title="3/8"></div>
+          <div class="bar" data-index="3" data-value="0.5"   title="1/2"></div>
+          <div class="bar" data-index="4" data-value="0.625" title="5/8"></div>
+          <div class="bar" data-index="5" data-value="0.75"  title="3/4"></div>
+          <div class="bar" data-index="6" data-value="0.875" title="7/8"></div>
+          <div class="bar" data-index="7" data-value="1"     title="Tam"></div>
         </div>
         <div class="fuel-label">F</div>
       </div>
@@ -111,19 +142,90 @@
   </div>
 
   <script>
-    function startApp(){document.querySelector('.splash-screen').style.display='none';document.getElementById('mainContent').style.display='flex';}
+    function startApp(){document.querySelector('.splash-screen').style.display='none';document.getElementById('mainContent').style.display='block';}
     if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('service-worker.js');});}
 
-    // ——— Globals ———
+    const CONFIG = {
+      ranges: { benzin:[55,60], motorin:[58,60], lpg:[25,30] },
+      cities: ["Adana","Adıyaman","Afyonkarahisar","Ağrı","Amasya","Ankara","Antalya","Artvin","Aydın","Balıkesir","Bilecik","Bingöl",
+        "Bitlis","Bolu","Burdur","Bursa","Çanakkale","Çankırı","Çorum","Denizli","Diyarbakır","Edirne","Elazığ","Erzincan","Erzurum",
+        "Eskişehir","Gaziantep","Giresun","Gümüşhane","Hakkâri","Hatay","Isparta","Mersin","İstanbul","İzmir","Kars","Kastamonu",
+        "Kayseri","Kırklareli","Kırşehir","Kocaeli","Konya","Kütahya","Malatya","Manisa","Kahramanmaraş","Mardin","Muğla","Muş",
+        "Nevşehir","Niğde","Ordu","Rize","Sakarya","Samsun","Siirt","Sinop","Sivas","Tekirdağ","Tokat","Trabzon","Tunceli","Şanlıurfa",
+        "Uşak","Van","Yozgat","Zonguldak","Aksaray","Bayburt","Karaman","Kırıkkale","Batman","Şırnak","Bartın","Ardahan","Iğdır",
+        "Yalova","Karabük","Kilis","Osmaniye","Düzce"]
+    };
+
+    // Populate cities
+    (function fillCities(){
+      const sel=document.getElementById('city');
+      sel.innerHTML="";
+      const list=[...CONFIG.cities].sort((a,b)=>a.localeCompare(b,'tr',{sensitivity:'base'}));
+      for(const c of list){ const o=document.createElement('option'); o.textContent=c; o.value=c; sel.appendChild(o); }
+      sel.value="İstanbul";
+    })();
+
+    // UI globals
     const bars = () => document.querySelectorAll('.bar');
     const tankInput = () => document.getElementById('tank');
     const hintText = () => document.getElementById('hintText');
     const almostEmpty = () => document.getElementById('almostEmpty');
-    let selectedLevel = 1;    // 1 = full, 0 = empty
-    let selectedIndex = 7;    // 0..7, -1 when almost empty
+    const lastUpdate = () => document.getElementById('lastUpdate');
+    let selectedLevel = 1, selectedIndex = 7;
 
-    // ——— Vehicle "database" with tank capacity (L) ———
-    const VEHICLES = [
+    function demoPriceFor(type){
+      const [min,max] = CONFIG.ranges[type] || CONFIG.ranges.benzin;
+      const val = Math.random()*(max-min)+min;
+      return Math.round(val*100)/100;
+    }
+
+    function updateBarTitles(){
+      const cap = getTankCapacity();
+      const fracs=[0.125,0.25,0.375,0.5,0.625,0.75,0.875,1];
+      const labels=['1/8','1/4','3/8','1/2','5/8','3/4','7/8','Tam'];
+      bars().forEach((bar,i)=>{ bar.title = `${labels[i]} (${(fracs[i]*cap).toFixed(2)} L)`; });
+      hintText().textContent=`Barlar ${cap}L depoya göre oranlanmıştır.`;
+    }
+    function getTankCapacity(){ const v=parseFloat(tankInput().value); return isNaN(v)||v<=0?50:v; }
+    function updateBars(){ bars().forEach(bar=>{ const i=parseInt(bar.dataset.index); bar.classList.toggle('active', i<=selectedIndex && selectedIndex>=0); }); }
+    function attachBarHandlers(){ bars().forEach(bar=>bar.addEventListener('click',()=>{ if(almostEmpty().checked) return; selectedLevel=parseFloat(bar.dataset.value); selectedIndex=parseInt(bar.dataset.index); updateBars(); })); }
+    function hesapla(){
+      const type=document.getElementById('fuelType').value;
+      const fiyatInput=document.getElementById('price').value;
+      const fiyat=fiyatInput?parseFloat(fiyatInput):demoPriceFor(type);
+      const cap=getTankCapacity();
+      const mevcut=cap*selectedLevel;
+      const eksik=cap-mevcut;
+      const tutar=eksik*fiyat;
+      const toplam=tutar+500;
+      document.getElementById('sonuc').innerHTML=`Eksik Yakıt: ${eksik.toFixed(2)} litre<br/><span class="tahsil">Tahsil Edilecek: ${toplam.toFixed(2)} ₺</span>`;
+    }
+
+    document.getElementById('fetchBtn').addEventListener('click',()=>{
+      const type=document.getElementById('fuelType').value;
+      const price=demoPriceFor(type);
+      document.getElementById('price').value=price.toFixed(2);
+      lastUpdate().textContent=new Date().toLocaleString('tr-TR'); // yalnız tarih-saat
+      localStorage.setItem('lastFuelPrice', String(price));
+      localStorage.setItem('lastFuelMeta', JSON.stringify({ ts: new Date().toISOString() }));
+    });
+
+    document.getElementById('tankPreset').addEventListener('change',(e)=>{ if(e.target.value) tankInput().value=e.target.value; updateBarTitles(); });
+    tankInput().addEventListener('input', updateBarTitles);
+    almostEmpty().addEventListener('change',()=>{ if(almostEmpty().checked){selectedLevel=0;selectedIndex=-1;} else {selectedLevel=1;selectedIndex=7;} updateBars(); });
+    attachBarHandlers(); updateBars(); updateBarTitles();
+    document.getElementById('hesaplaBtn').addEventListener('click', hesapla);
+
+    // Warm
+    (function warm(){
+      const last=localStorage.getItem('lastFuelPrice');
+      const meta=localStorage.getItem('lastFuelMeta');
+      if(last) document.getElementById('price').value=last;
+      if(meta) try{ const m=JSON.parse(meta); if(m?.ts) lastUpdate().textContent=new Date(m.ts).toLocaleString('tr-TR'); }catch{}
+    })();
+
+    // Vehicles
+    const VEHICLES=[
       {brand:"Alfa Romeo", model:"Giulia", cap:58}, {brand:"Alfa Romeo", model:"Tonale", cap:55},
       {brand:"Audi", model:"A1", cap:40}, {brand:"Audi", model:"A3", cap:50}, {brand:"Audi", model:"A4", cap:54}, {brand:"Audi", model:"Q2", cap:50}, {brand:"Audi", model:"Q3", cap:60}, {brand:"Audi", model:"Q5", cap:70},
       {brand:"BMW", model:"1 Series", cap:52}, {brand:"BMW", model:"3 Series", cap:59}, {brand:"BMW", model:"5 Series", cap:66}, {brand:"BMW", model:"X1", cap:61}, {brand:"BMW", model:"X3", cap:65},
@@ -159,52 +261,6 @@
     function vehicleLabel(v){return `${v.brand} — ${v.model}`;}
     function vehicleLabelWithCap(v){return `${v.brand} — ${v.model}${v.cap ? ' ('+v.cap+'L)' : ''}`;}
     function sortAZ(a,b){return vehicleLabel(a).localeCompare(vehicleLabel(b),'tr',{sensitivity:'base'});}
-
-    function updateBarTitles() {
-      const cap = getTankCapacity();
-      const fracs = [0.125,0.25,0.375,0.5,0.625,0.75,0.875,1];
-      const labels = ['1/8','1/4','3/8','1/2','5/8','3/4','7/8','Tam'];
-      bars().forEach((bar, i) => {
-        const liters = (fracs[i]*cap).toFixed(2);
-        bar.title = `${labels[i]} (${liters} L)`;
-      });
-      hintText().textContent = `Barlar ${cap}L depoya göre oranlanmıştır.`;
-    }
-
-    function getTankCapacity(){
-      const v = parseFloat(tankInput().value);
-      return isNaN(v) || v <= 0 ? 50 : v;
-    }
-
-    function updateBars() {
-      bars().forEach((bar) => {
-        const index = parseInt(bar.getAttribute('data-index'));
-        bar.classList.toggle('active', index <= selectedIndex && selectedIndex >= 0);
-      });
-    }
-
-    function attachBarHandlers(){
-      bars().forEach((bar) => {
-        bar.addEventListener('click', () => {
-          if (almostEmpty().checked) return;
-          selectedLevel = parseFloat(bar.getAttribute('data-value'));
-          selectedIndex = parseInt(bar.getAttribute('data-index'));
-          updateBars();
-        });
-      });
-    }
-
-    function hesapla() {
-      const fiyatInput = document.getElementById('price').value;
-      const fiyat = fiyatInput ? parseFloat(fiyatInput) : 48.42;
-      const cap = getTankCapacity();
-      const mevcut = cap * selectedLevel;
-      const eksik = cap - mevcut;
-      const tutar = eksik * fiyat;
-      const toplamTutar = tutar + 500;
-      document.getElementById('sonuc').innerHTML =
-        `Eksik Yakıt: ${eksik.toFixed(2)} litre<br/><span class="tahsil">Tahsil Edilecek: ${toplamTutar.toFixed(2)} ₺</span>`;
-    }
 
     function buildVehicleLists(){
       const data=[...VEHICLES].sort(sortAZ);
@@ -262,7 +318,7 @@
       search.addEventListener('change',()=>{
         const label=search.value?.trim();
         setFromLabel(label);
-        for(const option of select.options){ if(option.value===label){ select.value=label; return; } }
+        for(const option of sel.options){ if(option.value===label){ sel.value=label; return; } }
       });
 
       select.addEventListener('change',()=>{
@@ -272,28 +328,7 @@
       });
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('tankPreset').addEventListener('change', (e)=>{
-        if (e.target.value) tankInput().value = e.target.value;
-        updateBarTitles();
-      });
-
-      tankInput().addEventListener('input', updateBarTitles);
-
-      almostEmpty().addEventListener('change', () => {
-        if (almostEmpty().checked) { selectedLevel = 0; selectedIndex = -1; }
-        else { selectedLevel = 1; selectedIndex = 7; }
-        updateBars();
-      });
-
-      buildVehicleLists();
-      hookVehicleUI();
-      updateBarTitles();
-      attachBarHandlers();
-      updateBars();
-
-      document.getElementById('hesaplaBtn').addEventListener('click', hesapla);
-    });
+    document.addEventListener('DOMContentLoaded', () => { buildVehicleLists(); hookVehicleUI(); });
   </script>
 </body>
 </html>
