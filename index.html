@@ -3,190 +3,84 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EKSİK YAKIT HESAPLAMA | Fethiye Lovers</title>
-  <link rel="icon" href="https://i.ibb.co/Fbp1Ccnd/bafff.png" type="image/png" />
-  <meta name="description" content="Eksik yakıt hesaplama aracı. Fethiye Lovers tarafından hazırlanmıştır. Müşteriden tahsil edilecek yakıt ücretini hızlıca öğrenin." />
-  <meta name="keywords" content="yakıt hesaplama, benzin eksik hesaplama, fethiye araç kiralama, yakıt tahsilat, eksik depo hesapla" />
+  <title>Yakıt Hesaplama | Fethiye Lovers</title>
+  <link rel="icon" href="yakit-192.png" type="image/png" />
+  <meta name="description" content="Eksik yakıt hesaplama aracı. Fethiye Lovers tarafından hazırlanmıştır." />
   <meta name="author" content="Birkan Arslan Filiz" />
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; }
-    body {
-      font-family: 'Rubik', sans-serif;
-      margin: 0;
-      background: #000;
-      color: #f1f1f1;
-      overflow: hidden;
-    }
-    .splash-screen {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      flex-direction: column;
-    }
-    .splash-line {
-      width: 0;
-      height: 4px;
-      background: #00ffff;
-      transition: width 1s ease-in-out;
-    }
-    .splash-box {
-      margin-top: 20px;
-      padding: 20px 40px;
-      background: #111;
-      border-radius: 12px;
-      box-shadow: 0 0 10px #00ffff;
-      cursor: pointer;
-      text-align: center;
-      font-size: 18px;
-      color: #00ffff;
-      animation: pulse 2s infinite;
-      position: relative;
-      z-index: 2;
-    }
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 10px #00ffff; }
-      50% { box-shadow: 0 0 20px #00ffff; }
-    }
-    .explode {
-      animation: explode 0.5s forwards;
-    }
-    @keyframes explode {
-      0% { transform: scale(1); opacity: 1; }
-      100% { transform: scale(3); opacity: 0; }
-    }
-    .content {
-      display: none;
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
-      animation: fadeIn 1s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .container {
-      max-width: 520px;
-      background: #202020;
-      padding: 30px;
-      border-radius: 18px;
-      box-shadow: 0 8px 25px rgba(0, 255, 255, 0.1);
-    }
-    h2 {
-      text-align: center;
-      color: #ff5757;
-      font-weight: 700;
-      font-size: 24px;
-      letter-spacing: 1px;
-    }
-    label {
-      font-weight: 600;
-      display: block;
-      margin-top: 20px;
-    }
-    select,
-    button,
-    input {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      border-radius: 10px;
-      border: none;
-      font-size: 16px;
-      font-family: 'Rubik', sans-serif;
-    }
-    input {
-      background-color: #2a2a2a;
-      color: #fff;
-    }
-    button {
-      background: #00b4d8;
-      color: white;
-      font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-top: 20px;
-    }
-    button:hover {
-      background: #0077b6;
-    }
-    .result {
-      margin-top: 25px;
-      background: #330000;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-      font-weight: bold;
-    }
-    .tahsil {
-      color: #ff4d4d;
-      font-size: 18px;
-    }
-    .fuel-bar-wrapper {
-      display: flex;
-      align-items: center;
-      margin-top: 15px;
-    }
-    .fuel-label {
-      width: 20px;
-      text-align: center;
-      font-weight: bold;
-      color: #ccc;
-    }
-    .fuel-bar {
-      flex-grow: 1;
-      display: flex;
-      justify-content: space-between;
-      margin: 0 10px;
-    }
-    .bar {
-      flex: 1;
-      margin: 0 2px;
-      height: 26px;
-      border-radius: 6px;
-      background: #444;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .bar.active {
-      background: linear-gradient(to right, #00ffff, #00b4d8);
-      box-shadow: 0 0 6px #00ffffaa;
-    }
-    footer {
-      margin-top: 30px;
-      text-align: center;
-      color: #888;
-      font-size: 13px;
-    }
-    footer img {
-      max-width: 240px;
-      width: 100%;
-      margin-top: 10px;
-      opacity: 1;
-      filter: drop-shadow(0 0 6px rgba(255,255,255,0.2));
-    }
+    body {font-family:'Rubik',sans-serif;margin:0;background:#000;color:#f1f1f1;overflow:hidden;}
+    .splash-screen{position:fixed;top:0;left:0;width:100vw;height:100vh;background:#000;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;}
+    .splash-box{margin-top:20px;padding:20px 40px;background:#111;border-radius:12px;box-shadow:0 0 10px #00ffff;cursor:pointer;text-align:center;font-size:18px;color:#00ffff;animation:pulse 2s infinite;}
+    @keyframes pulse{0%,100%{box-shadow:0 0 10px #00ffff;}50%{box-shadow:0 0 20px #00ffff;}}
+    .content{display:none;padding:20px;display:flex;justify-content:center;flex-direction:column;align-items:center;}
+    .container{max-width:600px;background:#202020;padding:30px;border-radius:18px;box-shadow:0 8px 25px rgba(0,255,255,0.1);}
+    h2{text-align:center;color:#ff5757;font-weight:700;font-size:24px;}
+    label{font-weight:600;display:block;margin-top:20px;}
+    select,button,input{width:100%;padding:12px;margin-top:10px;border-radius:10px;border:none;font-size:16px;font-family:'Rubik',sans-serif;}
+    input,select{background:#1f1f1f;color:#fff;border:1px solid #2a2a2a;}
+    button{background:#00b4d8;color:white;font-weight:bold;text-transform:uppercase;letter-spacing:1px;margin-top:20px;}
+    button:hover{background:#0077b6;}
+    .row{display:flex;gap:10px;flex-wrap:wrap;}
+    .row > *{flex:1 1 220px;}
+    .result{margin-top:25px;background:#330000;padding:20px;border-radius:10px;text-align:center;font-weight:bold;}
+    .tahsil{color:#ff4d4d;font-size:18px;}
+    .fuel-bar-wrapper{display:flex;align-items:center;margin-top:15px;}
+    .fuel-label{width:20px;text-align:center;font-weight:bold;color:#ccc;}
+    .fuel-bar{flex-grow:1;display:flex;justify-content:space-between;margin:0 10px;}
+    .bar{flex:1;margin:0 2px;height:26px;border-radius:6px;background:#444;cursor:pointer;transition:background 0.3s;}
+    .bar.active{background:linear-gradient(to right,#00ffff,#00b4d8);box-shadow:0 0 6px #00ffffaa;}
+    .vehicle-card{margin-bottom:18px;background:#151515;border-radius:14px;padding:16px;box-shadow:0 4px 14px rgba(0,255,255,0.06);border:1px solid #222;}
+    .vehicle-header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+    .vehicle-header h3{margin:0;font-size:18px;color:#00ffff;}
+    .vehicle-search{flex:1;min-width:220px;}
+    .vehicle-select{width:100%;margin-top:10px;height:44px;}
+    .vehicle-selected{margin-top:10px;font-size:14px;color:#bbb;}
+    .almost-empty{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:14px;color:#ddd;background:#151515;padding:10px 12px;border-radius:10px;border:1px solid #222;}
+    .hint{margin-top:8px;font-size:12px;color:#9ad9ff;}
+    footer{margin-top:30px;text-align:center;color:#888;font-size:13px;}
+    footer img{max-width:240px;width:100%;margin-top:10px;filter:drop-shadow(0 0 6px rgba(255,255,255,0.2));}
   </style>
 </head>
 <body>
   <div class="splash-screen" onclick="startApp()">
-    <div class="splash-line" id="splashLine"></div>
-    <div class="splash-box" id="splashBox">Giriş için tıklayın</div>
+    <div class="splash-box">Giriş için tıklayın</div>
   </div>
 
   <div class="content" id="mainContent">
     <div class="container">
-      <h2>EKSİK YAKIT HESAPLAMA</h2>
-      <label for="price">Güncel Litre Fiyatı (₺):</label>
-      <input type="number" id="price" placeholder="Örn: 48.42" step="0.01" />
+      <h2>YAKIT HESAPLAMA</h2>
+
+      <div class="vehicle-card">
+        <div class="vehicle-header">
+          <h3>Araç Marka/Model</h3>
+          <input id="vehicleSearch" class="vehicle-search" type="text" placeholder="Marka veya model ara…" list="vehicleList">
+          <datalist id="vehicleList"></datalist>
+        </div>
+        <select id="vehicleSelect" class="vehicle-select"></select>
+        <div class="vehicle-selected" id="vehiclePicked">Seçilen araç: <strong>—</strong></div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="tank">Depo Kapasitesi (L):</label>
+          <input id="tank" type="number" min="20" max="120" step="1" value="50" />
+        </div>
+        <div>
+          <label for="tankPreset">Hızlı Seç (L):</label>
+          <select id="tankPreset">
+            <option value="">— Seç —</option>
+            <option>45</option>
+            <option selected>50</option>
+            <option>55</option>
+            <option>60</option>
+          </select>
+        </div>
+        <div>
+          <label for="price">Güncel Litre Fiyatı (₺):</label>
+          <input type="number" id="price" placeholder="Örn: 48.42" step="0.01" />
+        </div>
+      </div>
 
       <label>Yakıt Göstergesi:</label>
       <div class="fuel-bar-wrapper">
@@ -203,67 +97,202 @@
         </div>
         <div class="fuel-label">F</div>
       </div>
+      <div class="hint" id="hintText">Barlar 50L depoya göre oranlanmıştır.</div>
+
+      <label class="almost-empty"><input type="checkbox" id="almostEmpty"/> Depo neredeyse boş (tam kapasite kadar eksik kabul et)</label>
 
       <button id="hesaplaBtn">Hesapla</button>
       <div class="result" id="sonuc"></div>
     </div>
 
     <footer>
-      <br />
-      <img src="https://i.ibb.co/Fbp1Ccnd/bafff.png" alt="Birkan Arslan Filiz Logo" />
+      <img src="https://i.ibb.co/Fbp1Ccnd/bafff.png" alt="Birkan Arslan Filiz Logo">
     </footer>
   </div>
 
   <script>
-    function startApp() {
-      const splashBox = document.getElementById('splashBox');
-      splashBox.classList.add('explode');
-      setTimeout(() => {
-        document.querySelector('.splash-screen').style.display = 'none';
-        const mainContent = document.getElementById('mainContent');
-        mainContent.style.display = 'flex';
-        mainContent.style.animation = 'fadeIn 1s ease-in-out';
-        document.body.style.overflow = 'auto';
-      }, 500);
+    function startApp(){document.querySelector('.splash-screen').style.display='none';document.getElementById('mainContent').style.display='flex';}
+    if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('service-worker.js');});}
+
+    // ——— Globals ———
+    const bars = () => document.querySelectorAll('.bar');
+    const tankInput = () => document.getElementById('tank');
+    const hintText = () => document.getElementById('hintText');
+    const almostEmpty = () => document.getElementById('almostEmpty');
+    let selectedLevel = 1;    // 1 = full, 0 = empty
+    let selectedIndex = 7;    // 0..7, -1 when almost empty
+
+    // ——— Vehicle "database" with tank capacity (L) ———
+    const VEHICLES = [
+      {brand:"Alfa Romeo", model:"Giulia", cap:58}, {brand:"Alfa Romeo", model:"Tonale", cap:55},
+      {brand:"Audi", model:"A1", cap:40}, {brand:"Audi", model:"A3", cap:50}, {brand:"Audi", model:"A4", cap:54}, {brand:"Audi", model:"Q2", cap:50}, {brand:"Audi", model:"Q3", cap:60}, {brand:"Audi", model:"Q5", cap:70},
+      {brand:"BMW", model:"1 Series", cap:52}, {brand:"BMW", model:"3 Series", cap:59}, {brand:"BMW", model:"5 Series", cap:66}, {brand:"BMW", model:"X1", cap:61}, {brand:"BMW", model:"X3", cap:65},
+      {brand:"Citroën", model:"C3", cap:45}, {brand:"Citroën", model:"C4", cap:50}, {brand:"Citroën", model:"C5 Aircross", cap:53},
+      {brand:"Dacia", model:"Sandero", cap:50}, {brand:"Dacia", model:"Duster", cap:50}, {brand:"Dacia", model:"Jogger", cap:50}, {brand:"Dacia", model:"Logan", cap:50},
+      {brand:"Dacia", model:"Lodgy", cap:50},
+      {brand:"Fiat", model:"500", cap:35}, {brand:"Fiat", model:"Egea", cap:50}, {brand:"Fiat", model:"Egea Cross", cap:50},
+      {brand:"Fiat", model:"Panda", cap:37}, {brand:"Fiat", model:"Tipo", cap:50},
+      {brand:"Ford", model:"Fiesta", cap:42}, {brand:"Ford", model:"Focus", cap:52}, {brand:"Ford", model:"Kuga", cap:60},
+      {brand:"Honda", model:"Civic", cap:47}, {brand:"Honda", model:"Jazz", cap:40}, {brand:"Honda", model:"HR-V", cap:50}, {brand:"Honda", model:"CR-V", cap:57},
+      {brand:"Hyundai", model:"i10", cap:36}, {brand:"Hyundai", model:"i20", cap:40}, {brand:"Hyundai", model:"i30", cap:53}, {brand:"Hyundai", model:"Tucson", cap:54},
+      {brand:"Jeep", model:"Renegade", cap:48}, {brand:"Jeep", model:"Compass", cap:55},
+      {brand:"Kia", model:"Picanto", cap:35}, {brand:"Kia", model:"Rio", cap:45}, {brand:"Kia", model:"Ceed", cap:50}, {brand:"Kia", model:"Sportage", cap:54},
+      {brand:"Land Rover", model:"Discovery Sport", cap:65}, {brand:"Land Rover", model:"Range Rover Evoque", cap:67},
+      {brand:"Mazda", model:"3", cap:51}, {brand:"Mazda", model:"6", cap:62}, {brand:"Mazda", model:"CX-3", cap:48}, {brand:"Mazda", model:"CX-5", cap:56},
+      {brand:"Mercedes-Benz", model:"A 180", cap:43}, {brand:"Mercedes-Benz", model:"C 200", cap:66}, {brand:"Mercedes-Benz", model:"E 200", cap:66}, {brand:"Mercedes-Benz", model:"GLA", cap:51},
+      {brand:"MINI", model:"Cooper", cap:40}, {brand:"MINI", model:"Countryman", cap:51},
+      {brand:"Mitsubishi", model:"ASX", cap:60}, {brand:"Mitsubishi", model:"Outlander", cap:60},
+      {brand:"Nissan", model:"Micra", cap:41}, {brand:"Nissan", model:"Juke", cap:46}, {brand:"Nissan", model:"Qashqai", cap:55}, {brand:"Nissan", model:"X-Trail", cap:60},
+      {brand:"Opel", model:"Corsa", cap:40}, {brand:"Opel", model:"Astra", cap:52}, {brand:"Opel", model:"Insignia", cap:62}, {brand:"Opel", model:"Mokka", cap:50},
+      {brand:"Peugeot", model:"208", cap:44}, {brand:"Peugeot", model:"308", cap:52}, {brand:"Peugeot", model:"2008", cap:44}, {brand:"Peugeot", model:"3008", cap:53},
+      {brand:"Porsche", model:"Macan", cap:60}, {brand:"Porsche", model:"Cayenne", cap:75},
+      {brand:"Renault", model:"Clio", cap:39}, {brand:"Renault", model:"Megane", cap:50}, {brand:"Renault", model:"Captur", cap:48}, {brand:"Renault", model:"Talisman", cap:51},
+      {brand:"SEAT", model:"Ibiza", cap:40}, {brand:"SEAT", model:"Leon", cap:50}, {brand:"SEAT", model:"Arona", cap:40}, {brand:"SEAT", model:"Ateca", cap:50},
+      {brand:"Škoda", model:"Fabia", cap:40}, {brand:"Škoda", model:"Octavia", cap:50}, {brand:"Škoda", model:"Superb", cap:66}, {brand:"Škoda", model:"Kodiaq", cap:58},
+      {brand:"Suzuki", model:"Swift", cap:37}, {brand:"Suzuki", model:"Vitara", cap:47},
+      {brand:"Tesla", model:"Model 3", cap:0}, {brand:"Tesla", model:"Model Y", cap:0},
+      {brand:"Toyota", model:"Yaris", cap:42}, {brand:"Toyota", model:"Corolla", cap:50}, {brand:"Toyota", model:"C-HR", cap:43}, {brand:"Toyota", model:"RAV4", cap:55},
+      {brand:"Volkswagen", model:"Golf", cap:50}, {brand:"Volkswagen", model:"Passat", cap:66}, {brand:"Volkswagen", model:"Polo", cap:45}, {brand:"Volkswagen", model:"T-Roc", cap:50}, {brand:"Volkswagen", model:"Tiguan", cap:58},
+      {brand:"Volvo", model:"S60", cap:60}, {brand:"Volvo", model:"S90", cap:60}, {brand:"Volvo", model:"XC40", cap:54}, {brand:"Volvo", model:"XC60", cap:71}
+    ];
+
+    function vehicleLabel(v){return `${v.brand} — ${v.model}`;}
+    function vehicleLabelWithCap(v){return `${v.brand} — ${v.model}${v.cap ? ' ('+v.cap+'L)' : ''}`;}
+    function sortAZ(a,b){return vehicleLabel(a).localeCompare(vehicleLabel(b),'tr',{sensitivity:'base'});}
+
+    function updateBarTitles() {
+      const cap = getTankCapacity();
+      const fracs = [0.125,0.25,0.375,0.5,0.625,0.75,0.875,1];
+      const labels = ['1/8','1/4','3/8','1/2','5/8','3/4','7/8','Tam'];
+      bars().forEach((bar, i) => {
+        const liters = (fracs[i]*cap).toFixed(2);
+        bar.title = `${labels[i]} (${liters} L)`;
+      });
+      hintText().textContent = `Barlar ${cap}L depoya göre oranlanmıştır.`;
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-      let selectedLevel = 1;
-      let selectedIndex = 7;
-      const bars = document.querySelectorAll(".bar");
+    function getTankCapacity(){
+      const v = parseFloat(tankInput().value);
+      return isNaN(v) || v <= 0 ? 50 : v;
+    }
 
-      bars.forEach((bar) => {
-        bar.addEventListener("click", () => {
-          selectedLevel = parseFloat(bar.getAttribute("data-value"));
-          selectedIndex = parseInt(bar.getAttribute("data-index"));
+    function updateBars() {
+      bars().forEach((bar) => {
+        const index = parseInt(bar.getAttribute('data-index'));
+        bar.classList.toggle('active', index <= selectedIndex && selectedIndex >= 0);
+      });
+    }
+
+    function attachBarHandlers(){
+      bars().forEach((bar) => {
+        bar.addEventListener('click', () => {
+          if (almostEmpty().checked) return;
+          selectedLevel = parseFloat(bar.getAttribute('data-value'));
+          selectedIndex = parseInt(bar.getAttribute('data-index'));
           updateBars();
         });
       });
+    }
 
-      function updateBars() {
-        bars.forEach((bar) => {
-          const index = parseInt(bar.getAttribute("data-index"));
-          bar.classList.toggle("active", index <= selectedIndex);
-        });
+    function hesapla() {
+      const fiyatInput = document.getElementById('price').value;
+      const fiyat = fiyatInput ? parseFloat(fiyatInput) : 48.42;
+      const cap = getTankCapacity();
+      const mevcut = cap * selectedLevel;
+      const eksik = cap - mevcut;
+      const tutar = eksik * fiyat;
+      const toplamTutar = tutar + 500;
+      document.getElementById('sonuc').innerHTML =
+        `Eksik Yakıt: ${eksik.toFixed(2)} litre<br/><span class="tahsil">Tahsil Edilecek: ${toplamTutar.toFixed(2)} ₺</span>`;
+    }
+
+    function buildVehicleLists(){
+      const data=[...VEHICLES].sort(sortAZ);
+      const dl=document.getElementById('vehicleList');
+      const sel=document.getElementById('vehicleSelect');
+      dl.innerHTML=''; sel.innerHTML='';
+
+      for(const v of data){
+        const opt=document.createElement('option');
+        opt.value=vehicleLabelWithCap(v);
+        dl.appendChild(opt);
+      }
+      for(const v of data){
+        const o=document.createElement('option');
+        o.textContent=vehicleLabelWithCap(v);
+        o.value=vehicleLabelWithCap(v);
+        o.dataset.cap = v.cap || '';
+        sel.appendChild(o);
       }
 
-      function hesapla() {
-        const fiyatInput = document.getElementById("price").value;
-        const fiyat = fiyatInput ? parseFloat(fiyatInput) : 48.42;
-        const depo = 44;
-        const mevcut = depo * selectedLevel;
-        const eksik = depo - mevcut;
-        const tutar = eksik * fiyat;
-        const toplamTutar = tutar + 500;
+      const saved=localStorage.getItem('pickedVehicle');
+      const savedCap=localStorage.getItem('pickedVehicleCap');
+      if(saved){
+        document.getElementById('vehicleSearch').value=saved;
+        for(const option of sel.options){
+          if(option.value===saved){ sel.value=saved; break; }
+        }
+        if (savedCap) {
+          document.getElementById('tank').value = savedCap;
+          updateBarTitles();
+        }
+        renderPicked(saved);
+      }
+    }
 
-        document.getElementById("sonuc").innerHTML = `
-          Eksik Yakıt: ${eksik.toFixed(2)} litre<br />
-          <span class="tahsil">Tahsil Edilecek: ${toplamTutar.toFixed(2)} ₺</span>
-        `;
+    function renderPicked(label){
+      document.getElementById('vehiclePicked').innerHTML = 'Seçilen araç: <strong>'+(label||'—')+'</strong>';
+    }
+
+    function hookVehicleUI(){
+      const search=document.getElementById('vehicleSearch');
+      const select=document.getElementById('vehicleSelect');
+
+      function setFromLabel(label){
+        renderPicked(label);
+        localStorage.setItem('pickedVehicle', label||'');
+        const match = label && label.match(/\((\d+(?:\.\d+)?)L\)\s*$/);
+        if (match) {
+          document.getElementById('tank').value = match[1];
+          localStorage.setItem('pickedVehicleCap', match[1]);
+          updateBarTitles();
+        }
       }
 
-      document.getElementById("hesaplaBtn").addEventListener("click", hesapla);
+      search.addEventListener('change',()=>{
+        const label=search.value?.trim();
+        setFromLabel(label);
+        for(const option of select.options){ if(option.value===label){ select.value=label; return; } }
+      });
+
+      select.addEventListener('change',()=>{
+        const label=select.value;
+        document.getElementById('vehicleSearch').value=label;
+        setFromLabel(label);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('tankPreset').addEventListener('change', (e)=>{
+        if (e.target.value) tankInput().value = e.target.value;
+        updateBarTitles();
+      });
+
+      tankInput().addEventListener('input', updateBarTitles);
+
+      almostEmpty().addEventListener('change', () => {
+        if (almostEmpty().checked) { selectedLevel = 0; selectedIndex = -1; }
+        else { selectedLevel = 1; selectedIndex = 7; }
+        updateBars();
+      });
+
+      buildVehicleLists();
+      hookVehicleUI();
+      updateBarTitles();
+      attachBarHandlers();
       updateBars();
+
+      document.getElementById('hesaplaBtn').addEventListener('click', hesapla);
     });
   </script>
 </body>
