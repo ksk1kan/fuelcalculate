@@ -142,11 +142,21 @@
   </div>
 
   <script>
-    function startApp(){document.querySelector('.splash-screen').style.display='none';document.getElementById('mainContent').style.display='block';}
-    if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('service-worker.js');});}
+    function startApp(){
+      document.querySelector('.splash-screen').style.display='none';
+      document.getElementById('mainContent').style.display='block';
+    }
+    if('serviceWorker' in navigator){
+      window.addEventListener('load',()=>{navigator.serviceWorker.register('service-worker.js');});
+    }
 
+    // OTOMATİK FİYAT ARALIKLARI
     const CONFIG = {
-      ranges: { benzin:[55,60], motorin:[58,60], lpg:[25,30] },
+      ranges: { 
+        benzin:  [59, 61],
+        motorin: [61, 66],
+        lpg:     [31, 40]
+      },
       cities: ["Adana","Adıyaman","Afyonkarahisar","Ağrı","Amasya","Ankara","Antalya","Artvin","Aydın","Balıkesir","Bilecik","Bingöl",
         "Bitlis","Bolu","Burdur","Bursa","Çanakkale","Çankırı","Çorum","Denizli","Diyarbakır","Edirne","Elazığ","Erzincan","Erzurum",
         "Eskişehir","Gaziantep","Giresun","Gümüşhane","Hakkâri","Hatay","Isparta","Mersin","İstanbul","İzmir","Kars","Kastamonu",
@@ -156,16 +166,18 @@
         "Yalova","Karabük","Kilis","Osmaniye","Düzce"]
     };
 
-    // Populate cities
     (function fillCities(){
       const sel=document.getElementById('city');
       sel.innerHTML="";
       const list=[...CONFIG.cities].sort((a,b)=>a.localeCompare(b,'tr',{sensitivity:'base'}));
-      for(const c of list){ const o=document.createElement('option'); o.textContent=c; o.value=c; sel.appendChild(o); }
+      for(const c of list){
+        const o=document.createElement('option');
+        o.textContent=c; o.value=c;
+        sel.appendChild(o);
+      }
       sel.value="İstanbul";
     })();
 
-    // UI globals
     const bars = () => document.querySelectorAll('.bar');
     const tankInput = () => document.getElementById('tank');
     const hintText = () => document.getElementById('hintText');
@@ -183,12 +195,29 @@
       const cap = getTankCapacity();
       const fracs=[0.125,0.25,0.375,0.5,0.625,0.75,0.875,1];
       const labels=['1/8','1/4','3/8','1/2','5/8','3/4','7/8','Tam'];
-      bars().forEach((bar,i)=>{ bar.title = `${labels[i]} (${(fracs[i]*cap).toFixed(2)} L)`; });
+      bars().forEach((bar,i)=>{
+        bar.title = `${labels[i]} (${(fracs[i]*cap).toFixed(2)} L)`;
+      });
       hintText().textContent=`Barlar ${cap}L depoya göre oranlanmıştır.`;
     }
-    function getTankCapacity(){ const v=parseFloat(tankInput().value); return isNaN(v)||v<=0?50:v; }
-    function updateBars(){ bars().forEach(bar=>{ const i=parseInt(bar.dataset.index); bar.classList.toggle('active', i<=selectedIndex && selectedIndex>=0); }); }
-    function attachBarHandlers(){ bars().forEach(bar=>bar.addEventListener('click',()=>{ if(almostEmpty().checked) return; selectedLevel=parseFloat(bar.dataset.value); selectedIndex=parseInt(bar.dataset.index); updateBars(); })); }
+    function getTankCapacity(){
+      const v=parseFloat(tankInput().value);
+      return isNaN(v)||v<=0?50:v;
+    }
+    function updateBars(){
+      bars().forEach(bar=>{
+        const i=parseInt(bar.dataset.index);
+        bar.classList.toggle('active', i<=selectedIndex && selectedIndex>=0);
+      });
+    }
+    function attachBarHandlers(){
+      bars().forEach(bar=>bar.addEventListener('click',()=>{
+        if(almostEmpty().checked) return;
+        selectedLevel=parseFloat(bar.dataset.value);
+        selectedIndex=parseInt(bar.dataset.index);
+        updateBars();
+      }));
+    }
     function hesapla(){
       const type=document.getElementById('fuelType').value;
       const fiyatInput=document.getElementById('price').value;
@@ -198,33 +227,42 @@
       const eksik=cap-mevcut;
       const tutar=eksik*fiyat;
       const toplam=tutar+500;
-      document.getElementById('sonuc').innerHTML=`Eksik Yakıt: ${eksik.toFixed(2)} litre<br/><span class="tahsil">Tahsil Edilecek: ${toplam.toFixed(2)} ₺</span>`;
+      document.getElementById('sonuc').innerHTML=
+        `Eksik Yakıt: ${eksik.toFixed(2)} litre<br/><span class="tahsil">Tahsil Edilecek: ${toplam.toFixed(2)} ₺</span>`;
     }
 
     document.getElementById('fetchBtn').addEventListener('click',()=>{
       const type=document.getElementById('fuelType').value;
       const price=demoPriceFor(type);
       document.getElementById('price').value=price.toFixed(2);
-      lastUpdate().textContent=new Date().toLocaleString('tr-TR'); // yalnız tarih-saat
+      lastUpdate().textContent=new Date().toLocaleString('tr-TR');
       localStorage.setItem('lastFuelPrice', String(price));
       localStorage.setItem('lastFuelMeta', JSON.stringify({ ts: new Date().toISOString() }));
     });
 
-    document.getElementById('tankPreset').addEventListener('change',(e)=>{ if(e.target.value) tankInput().value=e.target.value; updateBarTitles(); });
+    document.getElementById('tankPreset').addEventListener('change',(e)=>{
+      if(e.target.value) tankInput().value=e.target.value;
+      updateBarTitles();
+    });
     tankInput().addEventListener('input', updateBarTitles);
-    almostEmpty().addEventListener('change',()=>{ if(almostEmpty().checked){selectedLevel=0;selectedIndex=-1;} else {selectedLevel=1;selectedIndex=7;} updateBars(); });
+    almostEmpty().addEventListener('change',()=>{
+      if(almostEmpty().checked){selectedLevel=0;selectedIndex=-1;}
+      else {selectedLevel=1;selectedIndex=7;}
+      updateBars();
+    });
     attachBarHandlers(); updateBars(); updateBarTitles();
     document.getElementById('hesaplaBtn').addEventListener('click', hesapla);
 
-    // Warm
     (function warm(){
       const last=localStorage.getItem('lastFuelPrice');
       const meta=localStorage.getItem('lastFuelMeta');
       if(last) document.getElementById('price').value=last;
-      if(meta) try{ const m=JSON.parse(meta); if(m?.ts) lastUpdate().textContent=new Date(m.ts).toLocaleString('tr-TR'); }catch{}
+      if(meta) try{
+        const m=JSON.parse(meta);
+        if(m?.ts) lastUpdate().textContent=new Date(m.ts).toLocaleString('tr-TR');
+      }catch{}
     })();
 
-    // Vehicles
     const VEHICLES=[
       {brand:"Alfa Romeo", model:"Giulia", cap:58}, {brand:"Alfa Romeo", model:"Tonale", cap:55},
       {brand:"Audi", model:"A1", cap:40}, {brand:"Audi", model:"A3", cap:50}, {brand:"Audi", model:"A4", cap:54}, {brand:"Audi", model:"Q2", cap:50}, {brand:"Audi", model:"Q3", cap:60}, {brand:"Audi", model:"Q5", cap:70},
@@ -318,7 +356,9 @@
       search.addEventListener('change',()=>{
         const label=search.value?.trim();
         setFromLabel(label);
-        for(const option of sel.options){ if(option.value===label){ sel.value=label; return; } }
+        for(const option of select.options){
+          if(option.value===label){ select.value=label; return; }
+        }
       });
 
       select.addEventListener('change',()=>{
